@@ -13,6 +13,14 @@ public class Student {
 	public Student() {
 
 	}
+	
+	public Student(int rollNo, String name, int[] marks) {
+		super();
+		this.rollNo = rollNo;
+		this.name = name;
+		this.marks = marks;
+	}
+
 
 	public Student(int rollNo, String name, int age, int std) {
 		super();
