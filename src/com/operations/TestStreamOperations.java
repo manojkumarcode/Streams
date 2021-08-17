@@ -3,6 +3,7 @@ package com.operations;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.pojo.Student;
@@ -26,6 +27,24 @@ public class TestStreamOperations {
 		
 		System.out.println("findAllStudentsByPercentage_limit ");
 		findAllStudentsByPercentage_limit(students, 50).forEach(System.out::println);
+		
+		System.out.println("findNoOfStudentsByPercentage ");
+		System.out.println(findNoOfStudentsByPercentage(students, 50));
+		
+		Optional<Student> optional = findOneStudentByName(students, "XYZ");
+		if(optional.isPresent()) {
+			System.out.println(optional.get());
+		}else {
+			System.out.println("Not found");
+		}
+		
+		Optional<Student> optional2 = findOneStudentByName(students, "XYZ1");
+		if(optional2.isPresent()) {
+			System.out.println(optional2.get());
+		}else {
+			System.out.println("Not found");
+		}
+
 
 	}
 	
@@ -59,7 +78,7 @@ public class TestStreamOperations {
 		
 		//students.stream().filter(s-> { return (s.getPercentage()> 50);} );
 		//students.stream().filter(s->s.getPercentage()>50);
-		List<Student> stu_per = students.stream().filter(s->s.getPercentage()>50).collect(Collectors.toList());
+		List<Student> stu_per = students.stream().filter(s->s.getPercentage()>per).collect(Collectors.toList());
 		
 		return stu_per;
 	}
@@ -77,10 +96,34 @@ public class TestStreamOperations {
 		
 		//students.stream().filter(s-> { return (s.getPercentage()> 50);} );
 		//students.stream().filter(s->s.getPercentage()>50);
-		List<Student> stu_per = students.stream().filter(s->s.getPercentage()>50)
+		List<Student> stu_per = students.stream().filter(s->s.getPercentage()>per)
 				.limit(2).collect(Collectors.toList());
 		
 		return stu_per;
+	}
+	
+	
+	/*
+	 * I want to collect just 2 of them 
+	 */
+	public static long findNoOfStudentsByPercentage(List<Student> students, long per) {
+//		 students.stream().filter( (s)-> {
+//			if(s.getPercentage()>=per) {
+//				return true;
+//			}
+//		}
+//		);
+		
+		//students.stream().filter(s-> { return (s.getPercentage()> 50);} );
+		//students.stream().filter(s->s.getPercentage()>50);
+		long count = students.stream().filter(s->s.getPercentage()> per)
+				.count();
+		
+		return count;
+	}
+	
+	public static Optional<Student> findOneStudentByName(List<Student> students, String name) {
+		return students.stream().filter((s)-> {return s.getName().equals(name);}).findFirst();
 	}
 
 
