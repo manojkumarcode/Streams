@@ -30,6 +30,15 @@ public class TestGroupBy_Partition {
 					System.out.println("***************");
 				}
 				);
+		
+		
+		products.stream().collect(Collectors.groupingBy(Product::getName, Collectors.counting())).forEach(
+				(key, num) ->
+				{
+					System.out.println(key + ": num=" + num);
+					System.out.println("***************");
+				}
+				);
 
 
 	}
