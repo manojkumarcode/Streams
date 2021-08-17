@@ -1,6 +1,8 @@
 package com.operations;
 
 import java.util.Arrays;
+import java.util.DoubleSummaryStatistics;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,6 +53,17 @@ public class TestGroupBy_Partition {
 		map2.forEach((key, list) -> {
 			System.out.println(key + ": " + list);
 		});
+		
+		System.out.println("#####stats##########");
+		
+		Map<String, Integer> map3 = products.stream().collect(Collectors.groupingBy(Product::getName, Collectors.summingInt(Product::getQty)));
+		System.out.println(map3);
+		
+		DoubleSummaryStatistics stats = products.stream().mapToDouble(Product::getPrice).summaryStatistics();
+		System.out.println(stats);
+		
+		Map<String, IntSummaryStatistics> summrizingInt = products.stream().collect(Collectors.groupingBy(Product::getName, Collectors.summarizingInt(Product::getQty)));
+		System.out.println(summrizingInt);
 
 	}
 
